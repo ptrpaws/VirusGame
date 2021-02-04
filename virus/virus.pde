@@ -7,7 +7,6 @@ int foodLimit = 180;
 float BIG_FACTOR = 100;
 float PLAY_SPEED = 0.6;
 double GENE_TICK_TIME = 40.0;
-double margin = 4;
 int START_LIVING_COUNT = 0;
 int[] cellCounts = {0, 0, 0};
 
@@ -473,7 +472,7 @@ void drawGenomeAsList(Genome g, double[] dims) {
   double h = dims[3];
   int GENOME_LENGTH = g.codons.size();
   double appCodonHeight = h/GENOME_LENGTH;
-  double appW = w*0.5-margin;
+  double appW = w*0.5;
   textFont(font, 30);
   textAlign(CENTER);
   pushMatrix();
@@ -488,19 +487,19 @@ void drawGenomeAsList(Genome g, double[] dims) {
     double appY = appCodonHeight*i;
     Codon codon = g.codons.get(i);
     for (int p = 0; p < 2; p++) {
-      double extraX = (w*0.5-margin)*p;
+      double extraX = (w*0.5)*p;
       color fillColor = codon.getColor(p);
       color textColor = codon.getTextColor(p);
       fill(0);
-      dRect(extraX+margin, appY+margin, appW, appCodonHeight-margin*2);
+      dRect(extraX, appY, appW, appCodonHeight*2);
       if (codon.hasSubstance()) {
         fill(fillColor);
         double trueW = appW*codon.codonHealth;
-        double trueX = extraX+margin;
+        double trueX = extraX;
         if (p == 0) {
           trueX += appW*(1-codon.codonHealth);
         }
-        dRect(trueX, appY+margin, trueW, appCodonHeight-margin*2);
+        dRect(trueX, appY, trueW, appCodonHeight);
       }
       fill(textColor);
       dText(codon.getText(p), extraX+w*0.25, appY+appCodonHeight/2+11);
@@ -508,7 +507,7 @@ void drawGenomeAsList(Genome g, double[] dims) {
       if (p == codonToEdit[0] && i == codonToEdit[1]) {
         double highlightFac = 0.5+0.5*sin(frameCount*0.25);
         fill(255, 255, 255, (float)(highlightFac*140));
-        dRect(extraX+margin, appY+margin, appW, appCodonHeight-margin*2);
+        dRect(extraX, appY, appW, appCodonHeight);
       }
     }
   }
@@ -517,7 +516,7 @@ void drawGenomeAsList(Genome g, double[] dims) {
     textFont(font, 60);
     double avgY = (h+height-y)/2;
     dText("( - )", w*0.25, avgY+11);
-    dText("( + )", w*0.75-margin, avgY+11);
+    dText("( + )", w*0.75, avgY+11);
   }
   popMatrix();
 }
@@ -527,7 +526,7 @@ void drawEditTable(double[] dims) {
   double w = dims[2];
   double h = dims[3];
 
-  double appW = w-margin*2;
+  double appW = w;
   textFont(font, 30);
   textAlign(CENTER);
 
@@ -544,7 +543,7 @@ void drawEditTable(double[] dims) {
       color fillColor = intToColor(CodonInfo.getColor(p, i));
       color textColor = intToColor(CodonInfo.getTextColor(p, i));
       fill(fillColor);
-      dRect(margin, appY+margin, appW, appChoiceHeight-margin*2);
+      dRect(0, appY, appW, appChoiceHeight);
       fill(textColor);
       dText(CodonInfo.getTextSimple(p, i, s, e), w*0.5, appY+appChoiceHeight/2+11);
     }
