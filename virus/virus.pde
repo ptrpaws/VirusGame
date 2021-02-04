@@ -491,7 +491,7 @@ void drawGenomeAsList(Genome g, double[] dims) {
       color fillColor = codon.getColor(p);
       color textColor = codon.getTextColor(p);
       fill(0);
-      dRect(extraX, appY, appW, appCodonHeight*2);
+      dRect(extraX, appY, appW, appCodonHeight);
       if (codon.hasSubstance()) {
         fill(fillColor);
         double trueW = appW*codon.codonHealth;
